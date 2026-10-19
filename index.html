@@ -1,5 +1,195 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Buzdovani Craft</title></head>
-<body style="background:#1a1a1a;color:#f5a623;font-family:sans-serif;text-align:center;padding-top:20vh">
-<h1>Buzdovani Craft</h1><p>Sajt uskoro!</p>
-</body></html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buzdovani Craft</title>
+<meta name="description" content="Buzdovani Craft: Factions server na Balkanu. IP: buzdovanicraft.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14110f;
+    --ink-soft: #1d1916;
+    --text: #f1ebe3;
+    --muted: #b9afa3;
+    --ember: #e8903a;
+    --line: rgba(241, 235, 227, .16);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: "Barlow", system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+
+  /* Navigacija */
+  .nav {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+    display: flex; justify-content: center; gap: 36px; flex-wrap: wrap;
+    padding: 26px 20px;
+    font-weight: 600; font-size: 16px; letter-spacing: .02em;
+  }
+  .nav a { opacity: .85; transition: opacity .2s, color .2s; }
+  .nav a:hover { opacity: 1; color: var(--ember); }
+
+  /* Hero */
+  .hero {
+    position: relative; min-height: 100vh; min-height: 100svh;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    padding: 110px 20px 60px;
+    background:
+      linear-gradient(180deg, rgba(20,17,15,.55) 0%, rgba(20,17,15,.35) 45%, rgba(20,17,15,.9) 100%),
+      url("pozadina.jpg") center / cover no-repeat,
+      radial-gradient(circle at 50% 35%, #3a2a1c 0%, #14110f 70%);
+  }
+  .hero h1 {
+    font-family: "Pixelify Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(44px, 9vw, 104px);
+    line-height: 1.02;
+    text-shadow: 0 4px 24px rgba(0,0,0,.6);
+  }
+  .hero p {
+    margin: 18px auto 34px; max-width: 34ch;
+    font-size: clamp(18px, 2.4vw, 24px); font-weight: 500;
+    text-shadow: 0 2px 14px rgba(0,0,0,.7);
+  }
+  .ip {
+    display: inline-flex; align-items: stretch;
+    border: 1px solid var(--line); border-radius: 999px; overflow: hidden;
+    background: rgba(20,17,15,.55); backdrop-filter: blur(6px);
+  }
+  .ip span { padding: 14px 24px; font-size: 20px; font-weight: 600; }
+  .ip button {
+    border: 0; border-left: 1px solid var(--line);
+    background: var(--ember); color: #1a1209;
+    font: inherit; font-weight: 600; font-size: 17px;
+    padding: 0 24px; cursor: pointer; transition: filter .2s;
+  }
+  .ip button:hover { filter: brightness(1.1); }
+  .version { margin-top: 16px; font-size: 15px; color: var(--muted); }
+
+  /* Sekcije */
+  main section { max-width: 920px; margin: 0 auto; padding: 88px 24px; }
+  main section + section { border-top: 1px solid var(--line); }
+  h2 {
+    font-family: "Pixelify Sans", system-ui, sans-serif;
+    font-weight: 700; font-size: clamp(30px, 5vw, 44px);
+    margin-bottom: 18px;
+  }
+  .lead { color: var(--muted); max-width: 60ch; }
+  .steps { margin-top: 26px; display: grid; gap: 14px; max-width: 60ch; list-style: none; counter-reset: s; }
+  .steps li { counter-increment: s; padding-left: 44px; position: relative; }
+  .steps li::before {
+    content: counter(s);
+    position: absolute; left: 0; top: 0;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--ink-soft); border: 1px solid var(--line);
+    display: grid; place-items: center; font-size: 15px; font-weight: 600; color: var(--ember);
+  }
+  .steps b { color: var(--ember); font-weight: 600; }
+
+  .ranks { margin-top: 28px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .rank { border: 1px solid var(--line); border-radius: 10px; padding: 24px; background: var(--ink-soft); }
+  .rank h3 { font-family: "Pixelify Sans", system-ui, sans-serif; font-size: 26px; margin-bottom: 6px; }
+  .rank.top { border-color: var(--ember); }
+  .rank p { color: var(--muted); font-size: 16px; }
+
+  .links { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
+  .btn {
+    display: inline-block; padding: 12px 26px; border-radius: 999px;
+    border: 1px solid var(--line); font-weight: 600; transition: border-color .2s, color .2s;
+  }
+  .btn:hover { border-color: var(--ember); color: var(--ember); }
+
+  footer { text-align: center; padding: 40px 20px 50px; color: var(--muted); font-size: 15px; border-top: 1px solid var(--line); }
+
+  @media (max-width: 560px) {
+    .nav { gap: 20px; font-size: 15px; }
+    .ip { flex-direction: column; border-radius: 18px; }
+    .ip button { border-left: 0; border-top: 1px solid var(--line); padding: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#ulaz">Kako se ulazi</a>
+  <a href="#rangovi">Rangovi</a>
+  <a href="https://discord.gg/TVOJ-DISCORD-LINK">Discord</a>
+  <a href="https://TVOJ-FORUM-LINK">Forum</a>
+  <a href="https://TVOJ-VOTE-LINK">Vote</a>
+</nav>
+
+<header class="hero">
+  <div>
+    <h1>Buzdovani Craft</h1>
+    <p>Factions server za one koji se ne plaše buzdovana.</p>
+    <div class="ip">
+      <span id="ipText">buzdovanicraft.com</span>
+      <button id="copyBtn" type="button">Kopiraj IP</button>
+    </div>
+    <div class="version">Minecraft Java 1.21.11</div>
+  </div>
+</header>
+
+<main>
+  <section id="ulaz">
+    <h2>Kako se ulazi</h2>
+    <p class="lead">Treba ti samo Minecraft Java i trideset sekundi.</p>
+    <ol class="steps">
+      <li>Pokreni Minecraft Java, verzija <b>1.21.11</b>.</li>
+      <li>Otvori <b>Multiplayer</b> i klikni <b>Add Server</b>.</li>
+      <li>Kao adresu upiši <b>buzdovanicraft.com</b> i uđi.</li>
+    </ol>
+  </section>
+
+  <section id="rangovi">
+    <h2>Rangovi</h2>
+    <p class="lead">Rangovi podržavaju server. Detalji i cijene stižu pred otvaranje.</p>
+    <div class="ranks">
+      <div class="rank"><h3>VIP</h3><p>Uskoro.</p></div>
+      <div class="rank"><h3>Creator</h3><p>Uskoro.</p></div>
+      <div class="rank top"><h3>Buzdovan</h3><p>Najviši rang. Uskoro.</p></div>
+    </div>
+  </section>
+
+  <section id="zajednica">
+    <h2>Zajednica</h2>
+    <p class="lead">Pravila, prijave, žalbe i vijesti su na forumu. Za razgovor uživo svrati na Discord.</p>
+    <div class="links">
+      <a class="btn" href="https://TVOJ-FORUM-LINK">Forum</a>
+      <a class="btn" href="https://discord.gg/TVOJ-DISCORD-LINK">Discord</a>
+    </div>
+  </section>
+</main>
+
+<footer>&copy; 2026 Buzdovani Craft. Nije povezano sa Mojang Studios niti Microsoftom.</footer>
+
+<script>
+  var btn = document.getElementById("copyBtn");
+  btn.addEventListener("click", function () {
+    var ip = document.getElementById("ipText").textContent;
+    function done() {
+      btn.textContent = "Kopirano";
+      setTimeout(function () { btn.textContent = "Kopiraj IP"; }, 1800);
+    }
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(ip).then(done);
+    } else {
+      var t = document.createElement("textarea");
+      t.value = ip; document.body.appendChild(t); t.select();
+      document.execCommand("copy"); document.body.removeChild(t); done();
+    }
+  });
+</script>
+</body>
+</html>
