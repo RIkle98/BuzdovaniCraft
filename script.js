@@ -96,6 +96,7 @@ if (dd) {
   var API = "https://api.buzdovanicraft.com";
 
   function logout() {
+    try { localStorage.removeItem("nick"); } catch (e) {}
     fetch(API + "/logout", { method: "POST", credentials: "include", headers: { "Content-Type": "application/json" }, body: "{}" })
       .catch(function () {})
       .then(function () { location.reload(); });
@@ -172,9 +173,23 @@ if (dd) {
     document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) wrap.classList.remove("open"); });
   }
 
+  var cached = null;
+  try { cached = localStorage.getItem("nick"); } catch (e) {}
+  if (cached && !/^[A-Za-z0-9_]{3,16}$/.test(cached)) cached = null;
+  if (cached) showUser(cached);
+
   fetch(API + "/me", { credentials: "include" })
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (d) { if (d && d.ok) showUser(d.nick); })
+    .then(function (r) { return r.ok ? r.json() : (r.status === 401 ? { ok: false } : null); })
+    .then(function (d) {
+      if (!d) return;
+      if (d.ok) {
+        try { localStorage.setItem("nick", d.nick); } catch (e) {}
+        if (d.nick !== cached) showUser(d.nick);
+      } else if (cached) {
+        try { localStorage.removeItem("nick"); } catch (e) {}
+        location.reload();
+      }
+    })
     .catch(function () {});
 
   function setTab(t) {
@@ -198,7 +213,7 @@ if (dd) {
   }
   function closeModal() { modal.classList.remove("show"); }
 
-  auth.querySelectorAll(".auth-btn").forEach(function (b) {
+  auth.querySelectorAll(".auth-btn[data-tab]").forEach(function (b) {
     b.addEventListener("click", function () { openModal(b.getAttribute("data-tab")); });
   });
   modal.querySelectorAll(".modal-tabs button").forEach(function (b) {
@@ -232,7 +247,7 @@ if (dd) {
     })
       .then(function (r) { return r.json().catch(function () { return { ok: false, error: "Greska servera." }; }); })
       .then(function (d) {
-        if (d.ok) { closeModal(); form.reset(); showUser(d.nick); }
+        if (d.ok) { try { localStorage.setItem("nick", d.nick); } catch (e) {} closeModal(); form.reset(); showUser(d.nick); }
         else { msg.textContent = d.error || "Greska."; }
       })
       .catch(function () { msg.textContent = "Server nije dostupan, probaj kasnije."; })
