@@ -8,13 +8,11 @@ function setTheme(t) {
 }
 document.documentElement.setAttribute("data-theme", getTheme());
 
-// Jezik (za sada se samo pamti, prevodi dolaze kasnije)
-function getLang() {
-  try { var l = localStorage.getItem("lang"); return (l === "sr" || l === "cnr") ? l : "bs"; } catch (e) { return "bs"; }
-}
+// Jezik (tekstovi su u lang.js, promjena jezika osvjezi stranicu)
+function getLang() { return curLang(); }
 function setLang(l) {
-  document.documentElement.setAttribute("lang", l);
   try { localStorage.setItem("lang", l); } catch (e) {}
+  location.reload();
 }
 
 // Dugme "Kopiraj IP"
@@ -22,7 +20,7 @@ var btn = document.getElementById("copyBtn");
 if (btn) btn.addEventListener("click", function () {
   var ip = document.getElementById("ipText").textContent;
   function done() {
-    btn.textContent = "Kopirano";
+    btn.textContent = tr("copied");
     setTimeout(function () { btn.textContent = "Kopiraj IP"; }, 1800);
   }
   if (navigator.clipboard) {
@@ -145,7 +143,7 @@ if (dd) {
       g.appendChild(d);
       return g;
     }
-    box.appendChild(group("Tema", [["dark", "Tamna"], ["light", "Svijetla"]], getTheme, setTheme));
+    box.appendChild(group("Tema", [["dark", "Tamna"], ["light", tr("light")]], getTheme, setTheme));
     box.appendChild(group("Jezik", [["sr", "Srpski"], ["bs", "Bosanski"], ["cnr", "Crnogorski"]], getLang, setLang));
     sub.appendChild(box);
     st.addEventListener("click", function (e) { e.stopPropagation(); sw.classList.toggle("open"); });
@@ -173,14 +171,14 @@ if (dd) {
     tab = t;
     modal.classList.toggle("is-register", t === "register");
     pass2.required = (t === "register");
-    submit.textContent = t === "register" ? "Napravi nalog" : "Prijavi se";
+    submit.textContent = t === "register" ? tr("create") : "Prijavi se";
     modal.querySelectorAll(".modal-tabs button").forEach(function (b) {
       var on = b.getAttribute("data-tab") === t;
       b.classList.toggle("active", on);
       b.style.display = on ? "" : "none";
     });
     modal.querySelector(".auth-switch").textContent =
-      t === "register" ? "Već imaš nalog? Prijavi se" : "Nemaš nalog? Registruj se";
+      t === "register" ? "Već imaš nalog? Prijavi se" : tr("nohave");
     msg.textContent = "";
   }
   function openModal(t) {
@@ -207,27 +205,27 @@ if (dd) {
     e.preventDefault();
     var nick = form.elements.nick.value;
     if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) {
-      msg.textContent = "Nick: 3 do 16 znakova, slova, brojevi i _.";
+      msg.textContent = tr("nickerr");
       return;
     }
     if (tab === "register" && form.elements.pass.value !== pass2.value) {
-      msg.textContent = "Lozinke se ne poklapaju.";
+      msg.textContent = tr("mismatch");
       return;
     }
     submit.disabled = true;
-    msg.textContent = "Slanje...";
+    msg.textContent = tr("sending");
     fetch(API + (tab === "register" ? "/register" : "/login"), {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nick: nick, pass: form.elements.pass.value })
     })
-      .then(function (r) { return r.json().catch(function () { return { ok: false, error: "Greska servera." }; }); })
+      .then(function (r) { return r.json().catch(function () { return { ok: false, error: tr("srverr") }; }); })
       .then(function (d) {
         if (d.ok) { closeModal(); form.reset(); showUser(d.nick); }
-        else { msg.textContent = d.error || "Greska."; }
+        else { msg.textContent = d.error || tr("err"); }
       })
-      .catch(function () { msg.textContent = "Server nije dostupan, probaj kasnije."; })
+      .catch(function () { msg.textContent = tr("down"); })
       .then(function () { submit.disabled = false; });
   });
 })();

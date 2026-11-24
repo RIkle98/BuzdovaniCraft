@@ -33,7 +33,7 @@
 <main class="vote-page">
   <div class="vote-left">
     <h2>Vote</h2>
-    <p class="lead">Glasaj za Buzdovani Craft na sve tri liste. Upiši tačan nick, isti kao u igri. Isti linkovi rade i komandom /vote.</p>
+    <p class="lead" data-i="vlead">Glasaj za Buzdovani Craft na sve tri liste. Upiši tačan nick, isti kao u igri. Isti linkovi rade i komandom /vote.</p>
     <div class="vote-cards">
       <div class="rank">
         <h3>Minecraft Servers</h3>
@@ -61,6 +61,7 @@
   </div>
 </main>
 
+<script src="lang.js"></script>
 <script src="votes-data.js"></script>
 <script>
 (function () {
@@ -71,7 +72,7 @@
       var e = document.createElement("tr");
       var c = document.createElement("td");
       c.colSpan = 3;
-      c.textContent = "Još nema glasova.";
+      c.textContent = tr("none");
       e.appendChild(c);
       body.appendChild(e);
       return;
