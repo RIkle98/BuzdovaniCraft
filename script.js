@@ -99,7 +99,7 @@ if (dd) {
     var st = document.createElement("button");
     st.type = "button";
     st.className = "sub-toggle";
-    st.textContent = "\u2039 Postavke";
+    st.textContent = "Postavke";
     var sub = document.createElement("div");
     sub.className = "sub-drop";
     sub.innerHTML =
