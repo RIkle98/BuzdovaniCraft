@@ -226,13 +226,18 @@ footer { text-align: center; padding: 40px 20px 50px; color: var(--muted); font-
   --ember: #d97a1c;
   --line: rgba(42,33,25,.18);
 }
-[data-theme="light"] .hero,
-[data-theme="light"] body:has(.hero) .nav {
-  --text: #f1ebe3;
-  --muted: #b9afa3;
-  --ember: #e8903a;
-  --line: rgba(241,235,227,.16);
-  color: #f1ebe3;
+[data-theme="light"] .hero {
+  background:
+    linear-gradient(180deg, rgba(246,241,234,.78) 0%, rgba(246,241,234,.6) 45%, rgba(246,241,234,.95) 100%),
+    url("image/background/pozadina.jpeg") center / cover no-repeat,
+    radial-gradient(circle at 50% 35%, #f3dcc0 0%, #f6f1ea 70%);
 }
-[data-theme="light"] .dd-box a { color: #f1ebe3; }
-[data-theme="light"] .dd-box a:hover { color: #e8903a; }
+[data-theme="light"] .hero h1,
+[data-theme="light"] .hero p,
+[data-theme="light"] .version { text-shadow: none; }
+[data-theme="light"] .ip { background: rgba(255,250,243,.8); }
+[data-theme="light"] .dd-box,
+[data-theme="light"] .user-drop { background: rgba(255,250,243,.97); border-color: var(--line); box-shadow: 0 12px 32px rgba(42,33,25,.18); }
+[data-theme="light"] .dd-box a:hover,
+[data-theme="light"] .user-drop button:hover { background: var(--ink); color: var(--ember); }
+[data-theme="light"] .user-drop button { color: var(--text); }
