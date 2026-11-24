@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vote | Buzdovani Craft</title>
+<meta name="description" content="Glasaj za Buzdovani Craft na top listama i pomozi serveru da raste.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=DotGothic16&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="image/favicon/favicon.png">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html">Početna</a>
+  <a href="vote.html">Vote</a>
+</nav>
+
+<main class="vote-page">
+  <div class="vote-left">
+    <h2>Vote</h2>
+    <p class="lead">Glasaj za Buzdovani Craft na sve tri liste. Upiši tačan nick, isti kao u igri. Isti linkovi rade i komandom /vote.</p>
+    <div class="vote-cards">
+      <div class="rank">
+        <h3>Minecraft Servers</h3>
+        <a class="btn" href="https://minecraftservers.org/vote/694962" target="_blank" rel="noopener noreferrer">Glasaj</a>
+      </div>
+      <div class="rank">
+        <h3>Minecraft-MP</h3>
+        <a class="btn" href="https://minecraft-mp.com/server/365741/vote/" target="_blank" rel="noopener noreferrer">Glasaj</a>
+      </div>
+      <div class="rank">
+        <h3>TopG</h3>
+        <a class="btn" href="https://topg.org/minecraft-servers/server-687464" target="_blank" rel="noopener noreferrer">Glasaj</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="vote-right">
+    <h2>Top 10 glasača</h2>
+    <p class="lead">Ukupno glasova: <span id="voteTotal">0</span></p>
+    <table class="top">
+      <thead><tr><th>#</th><th>Igrač</th><th>Glasova</th></tr></thead>
+      <tbody id="topBody"></tbody>
+    </table>
+    <p class="lead note">Prikazani su nickovi igrača koji su glasali.</p>
+  </div>
+</main>
+
+<script src="votes-data.js"></script>
+<script>
+(function () {
+  var body = document.getElementById("topBody");
+  var total = document.getElementById("voteTotal");
+  try {
+    if (typeof VOTES === "undefined" || !VOTES.top || !VOTES.top.length) {
+      var e = document.createElement("tr");
+      var c = document.createElement("td");
+      c.colSpan = 3;
+      c.textContent = "Još nema glasova.";
+      e.appendChild(c);
+      body.appendChild(e);
+      return;
+    }
+    total.textContent = VOTES.total;
+    VOTES.top.forEach(function (p, i) {
+      var tr = document.createElement("tr");
+      [i + 1, p.nick, p.votes].forEach(function (v) {
+        var td = document.createElement("td");
+        td.textContent = v;
+        tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+  } catch (err) {}
+})();
+</script>
+</body>
+</html>

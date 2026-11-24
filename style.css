@@ -54,11 +54,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ember); outline
     radial-gradient(circle at 50% 35%, #3a2a1c 0%, #14110f 70%);
 }
 .hero h1 {
-  font-family: "Pixelify Sans", system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(44px, 9vw, 104px);
+  font-family: "DotGothic16", "Pixelify Sans", system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: .02em;
+  font-size: clamp(44px, 8.5vw, 100px);
   line-height: 1.02;
-  text-shadow: 0 4px 24px rgba(0,0,0,.6);
+  text-shadow: 0 0 3px rgba(0,0,0,.9), 0 3px 10px rgba(0,0,0,.8), 0 4px 28px rgba(0,0,0,.7);
 }
 .hero p {
   margin: 18px auto 34px; max-width: 50ch;
@@ -78,7 +79,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ember); outline
   padding: 0 24px; cursor: pointer; transition: filter .2s;
 }
 .ip button:hover { filter: brightness(1.1); }
-.version { margin-top: 16px; font-size: 15px; color: var(--muted); }
+.version { margin-top: 18px; font-size: 19px; font-weight: 500; color: var(--text); text-shadow: 0 2px 12px rgba(0,0,0,.8); }
 .legal {
   position: absolute; left: 0; right: 0; bottom: 18px;
   padding: 0 20px; text-align: center;
@@ -125,4 +126,68 @@ footer { text-align: center; padding: 40px 20px 50px; color: var(--muted); font-
   .ip { flex-direction: column; border-radius: 18px; }
   .ip button { border-left: 0; border-top: 1px solid var(--line); padding: 14px; }
 }
+.vote-page section:first-child { padding-top: 130px; }
+.rank .btn { margin-top: 16px; }
+.top { width: 100%; max-width: 560px; margin-top: 20px; border-collapse: collapse; }
+.top th, .top td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); }
+.top th { color: var(--muted); font-weight: 500; font-size: 15px; }
+.top td:first-child { color: var(--ember); font-weight: 600; width: 56px; }
+.top th:last-child, .top td:last-child { text-align: right; }
+.top tbody tr:first-child td { font-weight: 600; }
+.note { margin-top: 14px; font-size: 15px; }
+
+/* Vote stranica: sve u jednom ekranu */
+.vote-page {
+  height: 100vh; height: 100svh; box-sizing: border-box; overflow: hidden;
+  max-width: 1200px; margin: 0 auto; padding: 84px 40px 28px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+}
+.vote-page h2 { font-size: clamp(28px, 3.6vw, 40px); margin-bottom: 10px; }
+.vote-page .lead { font-size: 16px; }
+.vote-cards { display: grid; gap: 12px; margin-top: 20px; }
+.vote-cards .rank { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 20px; }
+.vote-cards .rank h3 { font-size: 22px; margin: 0; }
+.vote-cards .rank .btn { margin: 0; padding: 9px 24px; }
+.vote-right .top { max-width: none; margin-top: 12px; }
+.vote-right .top th, .vote-right .top td { padding: 9px 14px; }
+.vote-right .note { font-size: 13px; margin-top: 10px; }
+@media (max-width: 860px), (max-height: 760px) {
+  .vote-page { height: auto; overflow: visible; grid-template-columns: 1fr; gap: 36px; align-items: start; }
+}
+.rank h3 { font-family: "DotGothic16", "Pixelify Sans", system-ui, sans-serif; font-weight: 400; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+/* Prijava / Registracija */
+.auth { position: absolute; right: 28px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
+.auth-btn {
+  font: inherit; font-weight: 600; font-size: 15px; cursor: pointer;
+  padding: 8px 20px; border-radius: 999px;
+  background: transparent; color: var(--text); border: 1px solid var(--line);
+  transition: border-color .2s, color .2s, filter .2s;
+}
+.auth-btn:hover { border-color: var(--ember); color: var(--ember); }
+.auth-btn.primary { background: var(--ember); border-color: var(--ember); color: #1a1209; }
+.auth-btn.primary:hover { color: #1a1209; filter: brightness(1.1); }
+@media (max-width: 900px) {
+  .auth { position: static; transform: none; width: 100%; justify-content: center; }
+}
+.modal { display: none; position: fixed; inset: 0; z-index: 20; align-items: center; justify-content: center; padding: 20px; background: rgba(10,8,7,.72); backdrop-filter: blur(4px); }
+.modal.show { display: flex; }
+.modal-box { position: relative; width: 100%; max-width: 380px; padding: 28px 26px 24px; background: var(--ink-soft); border: 1px solid var(--line); border-radius: 14px; }
+.modal-x { position: absolute; top: 8px; right: 12px; border: 0; background: none; color: var(--muted); font-size: 28px; line-height: 1; cursor: pointer; }
+.modal-x:hover { color: var(--ember); }
+.modal-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.modal-tabs button { flex: 1; font: inherit; font-family: "DotGothic16", "Pixelify Sans", sans-serif; font-size: 18px; padding: 8px; cursor: pointer; background: transparent; color: var(--muted); border: 0; border-bottom: 2px solid var(--line); }
+.modal-tabs button.active { color: var(--text); border-bottom-color: var(--ember); }
+.auth-form { display: grid; gap: 14px; }
+.auth-form label { display: grid; gap: 6px; font-size: 15px; color: var(--muted); }
+.auth-form input { font: inherit; font-size: 17px; padding: 10px 14px; color: var(--text); background: var(--ink); border: 1px solid var(--line); border-radius: 8px; -webkit-user-select: text; user-select: text; }
+.auth-form input:focus { outline: 2px solid var(--ember); outline-offset: 1px; }
+.auth-user { align-self: center; font-weight: 600; font-size: 15px; color: var(--ember); padding: 0 6px; }
+.reg-only { display: none !important; }
+.modal.is-register .reg-only { display: grid !important; }
+.auth-submit { font: inherit; font-weight: 600; font-size: 17px; padding: 11px; cursor: pointer; border: 0; border-radius: 999px; background: var(--ember); color: #1a1209; transition: filter .2s; }
+.auth-submit:hover { filter: brightness(1.1); }
+.auth-switch { font: inherit; font-size: 14px; background: none; border: 0; color: var(--muted); cursor: pointer; text-decoration: underline; }
+.auth-switch:hover { color: var(--ember); }
+.auth-msg { min-height: 1.4em; font-size: 14px; color: var(--ember); text-align: center; }

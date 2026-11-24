@@ -1,0 +1,1 @@
+var VOTES={total:26,top:[{"nick":"crkenzi","votes":14},{"nick":"srdz0","votes":3},{"nick":"slenderman_01","votes":3},{"nick":"jananazz","votes":3},{"nick":"thejoshua","votes":2},{"nick":"cryingcorpse","votes":1}]};
