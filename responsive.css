@@ -1,0 +1,92 @@
+/* Responsive: ucitava se poslije style.css */
+html { -webkit-text-size-adjust: 100%; }
+body { overflow-x: hidden; }
+img { max-width: 100%; }
+
+.nav-burger { display: none; }
+
+@media (max-width: 800px) {
+  .nav { justify-content: flex-start; align-items: center; gap: 0; padding: 14px 16px; }
+  .nav-burger { display: inline-flex; align-items: center; justify-content: center; order: 1; padding: 9px 12px; font: inherit; color: inherit; background: transparent; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; transition: border-color .3s ease, color .3s ease; }
+  .nav-burger:hover, .nav.open .nav-burger { border-color: var(--ember); color: var(--ember); }
+  .auth { position: static; transform: none; width: auto; order: 2; margin-left: auto; justify-content: flex-end; }
+
+  .nav > a, .nav > .dd { display: none; order: 3; width: 100%; }
+  .nav.open > a, .nav.open > .dd { display: block; }
+  .nav.open { background: rgba(20,17,15,.97); border-bottom: 1px solid var(--line); border-radius: 0 0 16px 16px; }
+  [data-theme="light"] .nav.open { background: rgba(255,250,243,.98); }
+  [data-theme="light"] body:has(.hero) .nav.open { background: rgba(20,17,15,.97); }
+  .nav.open > a, .nav.open > .dd > .dd-toggle { padding: 13px 6px; border-top: 1px solid var(--line); }
+  .nav.open > .dd > .dd-toggle { display: block; }
+  .nav > a::after { display: none; }
+  .nav > a.nav-launcher { margin-left: 0; }
+  .nav > a.active { color: var(--ember); }
+  .dd-menu { position: static; transform: none; min-width: 0; padding-top: 0; }
+  .dd-box { background: transparent; backdrop-filter: none; border: 0; border-radius: 0; }
+  .dd-box a { padding: 11px 18px; text-align: left; }
+  .dd:hover .dd-menu { display: none; }
+  .dd.open .dd-menu { display: block; }
+}
+
+@media (min-width: 801px) and (max-width: 1120px) {
+  .nav { justify-content: center; align-items: center; gap: 22px; padding: 22px 16px; flex-wrap: nowrap; font-size: 15px; }
+  .nav > a.nav-launcher { margin-left: 0; }
+  .auth { position: static; transform: none; width: auto; margin-left: 12px; justify-content: flex-start; }
+}
+
+@media (max-width: 640px) {
+  .auth-btn { padding: 7px 14px; font-size: 14px; }
+  .hero { padding: 100px 16px 60px; }
+  .modal-box { padding: 24px 18px 20px; }
+}
+
+@media (max-width: 400px) {
+  .hero h1 { font-size: 38px; }
+  .hero p { font-size: 17px; }
+  .ip span { padding: 12px 16px; font-size: 18px; }
+  .auth-btn { padding: 6px 11px; font-size: 13px; }
+}
+
+/* Vote i Launcher stranice */
+@media (max-width: 980px) {
+  .vp-wrap, .lp-wrap { padding-left: 24px; padding-right: 24px; }
+  .vp-title, .lp-title { word-break: normal; }
+  .lp-thumbs { flex-wrap: wrap; }
+}
+
+@media (max-width: 640px) {
+  .vp-wrap { padding-top: 96px; padding-bottom: 36px; gap: 32px; }
+  .lp-hero { padding: 96px 0 40px; gap: 28px; }
+  .lp-feats { padding-bottom: 50px; }
+  .vp-head { flex-wrap: wrap; align-items: flex-start; }
+  .vp-total { text-align: left; }
+  .vp-total b { font-size: 36px; }
+  .vp-row { grid-template-columns: 34px 1fr auto; gap: 8px; padding: 10px 12px; }
+  .vp-nick, .vp-votes { font-size: 16px; }
+  .vp-go { font-size: 15px; }
+  .vp-num { width: 36px; height: 36px; font-size: 16px; }
+  .lp-card { padding: 22px 20px; }
+  .lp-card h3 { font-size: 23px; }
+  .lp-th { max-width: none; }
+  .lb-nav { width: 40px; height: 40px; font-size: 28px; }
+  .lb-prev { left: 8px; }
+  .lb-next { right: 8px; }
+  .lb-x { right: 12px; }
+  .lb-img { max-width: 94vw; }
+  .lb-count { font-size: 13px; padding: 0 12px; }
+}
+
+@media (max-width: 360px) {
+  .vp-wrap, .lp-wrap { padding-left: 14px; padding-right: 14px; }
+  .vp-title, .lp-title { font-size: 36px; }
+  .vp-lead, .lp-lead { font-size: 16px; }
+  .vp-link { padding: 14px; gap: 10px; }
+  .vp-name { font-size: 19px; }
+  .vp-board { padding: 18px 14px; }
+}
+
+@media (max-width: 520px) {
+  .vp-go { font-size: 0; gap: 0; }
+  .vp-name { font-size: 19px; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .vp-link { gap: 12px; }
+}

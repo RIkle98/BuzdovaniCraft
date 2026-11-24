@@ -52,6 +52,22 @@ if (dd) {
     '<button type="button" class="auth-btn primary" data-tab="register">Registracija</button>';
   nav.appendChild(auth);
 
+  var burger = document.createElement("button");
+  burger.type = "button";
+  burger.className = "nav-burger";
+  burger.setAttribute("aria-label", "Meni");
+  burger.setAttribute("aria-expanded", "false");
+  burger.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>';
+  nav.insertBefore(burger, nav.firstChild);
+  burger.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var o = nav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", o ? "true" : "false");
+  });
+  document.addEventListener("click", function (e) {
+    if (!nav.contains(e.target)) { nav.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); }
+  });
+
   var modal = document.createElement("div");
   modal.className = "modal";
   modal.innerHTML =
