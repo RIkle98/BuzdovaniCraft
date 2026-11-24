@@ -10,10 +10,10 @@ document.documentElement.setAttribute("data-theme", getTheme());
 
 // Jezik (za sada se samo pamti, prevodi dolaze kasnije)
 function getLang() {
-  try { return localStorage.getItem("lang") === "en" ? "en" : "bs"; } catch (e) { return "bs"; }
+  try { var l = localStorage.getItem("lang"); return (l === "sr" || l === "cnr") ? l : "bs"; } catch (e) { return "bs"; }
 }
 function setLang(l) {
-  document.documentElement.setAttribute("lang", l === "en" ? "en" : "sr");
+  document.documentElement.setAttribute("lang", l);
   try { localStorage.setItem("lang", l); } catch (e) {}
 }
 
@@ -146,7 +146,7 @@ if (dd) {
       return g;
     }
     box.appendChild(group("Tema", [["dark", "Tamna"], ["light", "Svijetla"]], getTheme, setTheme));
-    box.appendChild(group("Jezik", [["bs", "Bosanski"], ["en", "English"]], getLang, setLang));
+    box.appendChild(group("Jezik", [["sr", "Srpski"], ["bs", "Bosanski"], ["cnr", "Crnogorski"]], getLang, setLang));
     sub.appendChild(box);
     st.addEventListener("click", function (e) { e.stopPropagation(); sw.classList.toggle("open"); });
     sw.appendChild(st);
