@@ -32,6 +32,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ember); outline
 }
 .nav a { opacity: .85; transition: opacity .2s, color .2s; }
 .nav a:hover { opacity: 1; color: var(--ember); }
+.nav > a { position: relative; }
+.nav > a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--ember); transform: scaleX(0); transition: transform .3s ease; }
+.nav > a.active { opacity: 1; color: var(--ember); }
+.nav > a.active::after { transform: scaleX(1); }
+[data-theme="light"] .dd-box a:hover { background: #1d1916; }
 .dd { position: relative; }
 .dd-menu { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); padding-top: 12px; min-width: 160px; }
 .dd:hover .dd-menu, .dd.open .dd-menu { display: block; }
