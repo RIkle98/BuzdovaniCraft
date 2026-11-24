@@ -33,6 +33,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ember); outline
 .nav a { opacity: .85; transition: opacity .2s, color .2s; }
 .nav a:hover { opacity: 1; color: var(--ember); }
 .nav > a { position: relative; }
+.vote-left, .vote-left * { -webkit-user-select: text; user-select: text; }
+.vote-left .url { word-break: break-all; }
+.shots { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 16px; margin: 18px 0; }
+.shots img { width: 320px; max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); }
 .nav > a.nav-launcher { margin-left: 32px; }
 .nav > a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--ember); transform: scaleX(0); transition: transform .3s ease; }
 .nav > a.active { opacity: 1; color: var(--ember); }
