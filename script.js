@@ -1,3 +1,13 @@
+// Tema (tamna / svijetla), pamti se u pregledacu
+function getTheme() {
+  try { return localStorage.getItem("theme") === "light" ? "light" : "dark"; } catch (e) { return "dark"; }
+}
+function setTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  try { localStorage.setItem("theme", t); } catch (e) {}
+}
+document.documentElement.setAttribute("data-theme", getTheme());
+
 // Dugme "Kopiraj IP"
 var btn = document.getElementById("copyBtn");
 btn.addEventListener("click", function () {
@@ -26,7 +36,7 @@ document.addEventListener("click", function (e) {
   if (!dd.contains(e.target)) dd.classList.remove("open");
 });
 
-// Prijava / Registracija (samo izgled, server jos nije povezan)
+// Prijava / Registracija / korisnicki meni
 (function () {
   var nav = document.querySelector(".nav");
   if (!nav) return;
@@ -65,22 +75,71 @@ document.addEventListener("click", function (e) {
   var tab = "login";
   var API = "https://api.buzdovanicraft.com";
 
+  function logout() {
+    fetch(API + "/logout", { method: "POST", credentials: "include", headers: { "Content-Type": "application/json" }, body: "{}" })
+      .catch(function () {})
+      .then(function () { location.reload(); });
+  }
+
+  var settings = null;
+  function openSettings() {
+    if (!settings) {
+      settings = document.createElement("div");
+      settings.className = "modal";
+      settings.innerHTML =
+        '<div class="modal-box" role="dialog" aria-modal="true">' +
+          '<button type="button" class="modal-x" aria-label="Zatvori">&times;</button>' +
+          '<h3 class="set-title">Postavke</h3>' +
+          '<div class="set-row"><span>Tema</span>' +
+            '<div class="set-seg">' +
+              '<button type="button" data-theme="dark">Tamna</button>' +
+              '<button type="button" data-theme="light">Svijetla</button>' +
+            '</div></div>' +
+          '<button type="button" class="auth-submit set-logout">Odjava</button>' +
+        '</div>';
+      document.body.appendChild(settings);
+      function mark() {
+        settings.querySelectorAll(".set-seg button").forEach(function (b) {
+          b.classList.toggle("on", b.getAttribute("data-theme") === getTheme());
+        });
+      }
+      settings.querySelectorAll(".set-seg button").forEach(function (b) {
+        b.addEventListener("click", function () { setTheme(b.getAttribute("data-theme")); mark(); });
+      });
+      settings.querySelector(".set-logout").addEventListener("click", logout);
+      settings.querySelector(".modal-x").addEventListener("click", function () { settings.classList.remove("show"); });
+      settings.addEventListener("click", function (e) { if (e.target === settings) settings.classList.remove("show"); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") settings.classList.remove("show"); });
+      mark();
+    }
+    settings.classList.add("show");
+  }
+
   function showUser(nick) {
     auth.innerHTML = "";
-    var s = document.createElement("span");
-    s.className = "auth-user";
-    s.textContent = nick;
+    var wrap = document.createElement("div");
+    wrap.className = "user-menu";
     var b = document.createElement("button");
     b.type = "button";
-    b.className = "auth-btn";
-    b.textContent = "Odjava";
-    b.addEventListener("click", function () {
-      fetch(API + "/logout", { method: "POST", credentials: "include", headers: { "Content-Type": "application/json" }, body: "{}" })
-        .catch(function () {})
-        .then(function () { location.reload(); });
-    });
-    auth.appendChild(s);
-    auth.appendChild(b);
+    b.className = "auth-btn user-btn";
+    b.textContent = nick + " \u25BE";
+    var drop = document.createElement("div");
+    drop.className = "user-drop";
+    var st = document.createElement("button");
+    st.type = "button";
+    st.textContent = "Postavke";
+    st.addEventListener("click", function () { wrap.classList.remove("open"); openSettings(); });
+    var lo = document.createElement("button");
+    lo.type = "button";
+    lo.textContent = "Odjava";
+    lo.addEventListener("click", logout);
+    drop.appendChild(st);
+    drop.appendChild(lo);
+    wrap.appendChild(b);
+    wrap.appendChild(drop);
+    auth.appendChild(wrap);
+    b.addEventListener("click", function (e) { e.stopPropagation(); wrap.classList.toggle("open"); });
+    document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) wrap.classList.remove("open"); });
   }
 
   fetch(API + "/me", { credentials: "include" })
