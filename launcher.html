@@ -38,31 +38,10 @@
     <h2>Buzz Launcher</h2>
     <p class="lead">Minecraft Launcher kreiran od buzdovana za buzdovana. Jedan exe kojeg otvoriš, a on napravi folder sa klijentom na mjestu gdje je otvoren.</p>
     <div class="gal-row" id="galRow"></div>
-    <p class="lead">Skineš zip, raspakuješ i pokreneš BuzzLauncher.exe. Chrome ili Windows mogu javiti sumnjivo skidanje jer launcher nije potpisan: klikni "Zadrži" (Keep).</p>
-    <p class="lead note">SHA-256 fajla BuzzLauncher.exe unutar zip-a: <span class="sha-line"><span id="shaTxt">01d49c877553c6cc0587e1f008cf7c157f66eb77365c15070f5bed95a4531e84</span> <button type="button" id="shaCopy" class="copy-ico" aria-label="Kopiraj SHA-256" title="Kopiraj"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span></p>
   </div>
 </main>
 
 <script src="script.js"></script>
-<script>
-(function () {
-  var b = document.getElementById("shaCopy");
-  var t = document.getElementById("shaTxt");
-  if (!b || !t) return;
-  b.addEventListener("click", function () {
-    var h = t.textContent.trim();
-    var orig = b.dataset.o || (b.dataset.o = b.innerHTML);
-    function ok() { b.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'; setTimeout(function () { b.innerHTML = orig; }, 2000); }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(h).then(ok, function () {});
-    } else {
-      var r = document.createRange(); r.selectNodeContents(t);
-      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-      try { document.execCommand("copy"); ok(); } catch (e) {}
-    }
-  });
-})();
-</script>
 <script>
 (function () {
   // Ovdje se dodaju slike: [putanja, opis]. Prva je mala slika na stranici.
