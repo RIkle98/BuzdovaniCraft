@@ -228,14 +228,17 @@ footer { text-align: center; padding: 40px 20px 50px; color: var(--muted); font-
   opacity: 0; visibility: hidden; transform: translateX(8px);
   transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
 }
-.sub-wrap:hover .sub-drop, .sub-wrap.open .sub-drop { opacity: 1; visibility: visible; transform: translateX(0); }
+.sub-wrap:hover > .sub-drop, .sub-wrap.open > .sub-drop { opacity: 1; visibility: visible; transform: translateX(0); }
 .sub-box {
-  display: grid; gap: 10px; padding: 14px 16px; min-width: 200px;
+  display: grid; gap: 6px; padding: 10px; min-width: 190px;
   background: rgba(20,17,15,.96); backdrop-filter: blur(6px);
   border: 1px solid rgba(241,235,227,.16); border-radius: 14px;
   box-shadow: 0 12px 32px rgba(0,0,0,.45);
 }
 .sub-label { font-size: 14px; color: #b9afa3; }
+.user-drop .opt.on { color: #e8903a; }
+.user-drop .opt.on::after { content: " \2713"; }
+[data-theme="light"] .user-drop .opt.on { color: #d97a1c; }
 .user-drop .set-seg button { display: inline-block; width: auto; flex: 1; padding: 8px 14px; font-size: 15px; font-weight: 500; border-radius: 0; background: transparent; color: #b9afa3; text-align: center; }
 .user-drop .set-seg button:hover { background: transparent; color: #e8903a; }
 .user-drop .set-seg button.on, .user-drop .set-seg button.on:hover { background: #e8903a; color: #1a1209; }
@@ -246,7 +249,7 @@ footer { text-align: center; padding: 40px 20px 50px; color: var(--muted); font-
 [data-theme="light"] .user-drop .set-seg button.on, [data-theme="light"] .user-drop .set-seg button.on:hover { background: #d97a1c; color: #1a1209; }
 @media (max-width: 900px) {
   .sub-drop { position: static; padding: 6px 0 0; opacity: 1; visibility: visible; transform: none; display: none; }
-  .sub-wrap.open .sub-drop { display: block; }
+  .sub-wrap.open > .sub-drop { display: block; }
 }
 
 /* Svijetla tema */

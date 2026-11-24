@@ -8,6 +8,15 @@ function setTheme(t) {
 }
 document.documentElement.setAttribute("data-theme", getTheme());
 
+// Jezik (za sada se samo pamti, prevodi dolaze kasnije)
+function getLang() {
+  try { return localStorage.getItem("lang") === "en" ? "en" : "bs"; } catch (e) { return "bs"; }
+}
+function setLang(l) {
+  document.documentElement.setAttribute("lang", l === "en" ? "en" : "sr");
+  try { localStorage.setItem("lang", l); } catch (e) {}
+}
+
 // Dugme "Kopiraj IP"
 var btn = document.getElementById("copyBtn");
 if (btn) btn.addEventListener("click", function () {
@@ -102,21 +111,43 @@ if (dd) {
     st.textContent = "Postavke";
     var sub = document.createElement("div");
     sub.className = "sub-drop";
-    sub.innerHTML =
-      '<div class="sub-box"><span class="sub-label">Tema</span>' +
-      '<div class="set-seg">' +
-        '<button type="button" data-theme="dark">Tamna</button>' +
-        '<button type="button" data-theme="light">Svijetla</button>' +
-      '</div></div>';
-    function mark() {
-      sub.querySelectorAll(".set-seg button").forEach(function (t) {
-        t.classList.toggle("on", t.getAttribute("data-theme") === getTheme());
+    var box = document.createElement("div");
+    box.className = "sub-box";
+    function group(label, opts, getv, setv) {
+      var g = document.createElement("div");
+      g.className = "sub-wrap";
+      var t = document.createElement("button");
+      t.type = "button";
+      t.className = "sub-toggle";
+      t.textContent = label;
+      var d = document.createElement("div");
+      d.className = "sub-drop";
+      var bx = document.createElement("div");
+      bx.className = "sub-box";
+      function mark() {
+        bx.querySelectorAll(".opt").forEach(function (o) {
+          o.classList.toggle("on", o.getAttribute("data-v") === getv());
+        });
+      }
+      opts.forEach(function (op) {
+        var o = document.createElement("button");
+        o.type = "button";
+        o.className = "opt";
+        o.setAttribute("data-v", op[0]);
+        o.textContent = op[1];
+        o.addEventListener("click", function (e) { e.stopPropagation(); setv(op[0]); mark(); });
+        bx.appendChild(o);
       });
+      mark();
+      t.addEventListener("click", function (e) { e.stopPropagation(); g.classList.toggle("open"); });
+      d.appendChild(bx);
+      g.appendChild(t);
+      g.appendChild(d);
+      return g;
     }
-    sub.querySelectorAll(".set-seg button").forEach(function (t) {
-      t.addEventListener("click", function () { setTheme(t.getAttribute("data-theme")); mark(); });
-    });
-    mark();
+    box.appendChild(group("Tema", [["dark", "Tamna"], ["light", "Svijetla"]], getTheme, setTheme));
+    box.appendChild(group("Jezik", [["bs", "Bosanski"], ["en", "English"]], getLang, setLang));
+    sub.appendChild(box);
     st.addEventListener("click", function (e) { e.stopPropagation(); sw.classList.toggle("open"); });
     sw.appendChild(st);
     sw.appendChild(sub);
