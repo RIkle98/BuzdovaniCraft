@@ -83,39 +83,6 @@ if (dd) {
       .then(function () { location.reload(); });
   }
 
-  var settings = null;
-  function openSettings() {
-    if (!settings) {
-      settings = document.createElement("div");
-      settings.className = "modal";
-      settings.innerHTML =
-        '<div class="modal-box" role="dialog" aria-modal="true">' +
-          '<button type="button" class="modal-x" aria-label="Zatvori">&times;</button>' +
-          '<h3 class="set-title">Postavke</h3>' +
-          '<div class="set-row"><span>Tema</span>' +
-            '<div class="set-seg">' +
-              '<button type="button" data-theme="dark">Tamna</button>' +
-              '<button type="button" data-theme="light">Svijetla</button>' +
-            '</div></div>' +
-          '<button type="button" class="auth-submit set-logout">Odjava</button>' +
-        '</div>';
-      document.body.appendChild(settings);
-      function mark() {
-        settings.querySelectorAll(".set-seg button").forEach(function (b) {
-          b.classList.toggle("on", b.getAttribute("data-theme") === getTheme());
-        });
-      }
-      settings.querySelectorAll(".set-seg button").forEach(function (b) {
-        b.addEventListener("click", function () { setTheme(b.getAttribute("data-theme")); mark(); });
-      });
-      settings.querySelector(".set-logout").addEventListener("click", logout);
-      settings.querySelector(".modal-x").addEventListener("click", function () { settings.classList.remove("show"); });
-      settings.addEventListener("click", function (e) { if (e.target === settings) settings.classList.remove("show"); });
-      document.addEventListener("keydown", function (e) { if (e.key === "Escape") settings.classList.remove("show"); });
-      mark();
-    }
-    settings.classList.add("show");
-  }
 
   function showUser(nick) {
     auth.innerHTML = "";
@@ -127,15 +94,37 @@ if (dd) {
     b.textContent = nick + " \u25BE";
     var drop = document.createElement("div");
     drop.className = "user-drop";
+    var sw = document.createElement("div");
+    sw.className = "sub-wrap";
     var st = document.createElement("button");
     st.type = "button";
-    st.textContent = "Postavke";
-    st.addEventListener("click", function () { wrap.classList.remove("open"); openSettings(); });
+    st.className = "sub-toggle";
+    st.textContent = "\u2039 Postavke";
+    var sub = document.createElement("div");
+    sub.className = "sub-drop";
+    sub.innerHTML =
+      '<div class="sub-box"><span class="sub-label">Tema</span>' +
+      '<div class="set-seg">' +
+        '<button type="button" data-theme="dark">Tamna</button>' +
+        '<button type="button" data-theme="light">Svijetla</button>' +
+      '</div></div>';
+    function mark() {
+      sub.querySelectorAll(".set-seg button").forEach(function (t) {
+        t.classList.toggle("on", t.getAttribute("data-theme") === getTheme());
+      });
+    }
+    sub.querySelectorAll(".set-seg button").forEach(function (t) {
+      t.addEventListener("click", function () { setTheme(t.getAttribute("data-theme")); mark(); });
+    });
+    mark();
+    st.addEventListener("click", function (e) { e.stopPropagation(); sw.classList.toggle("open"); });
+    sw.appendChild(st);
+    sw.appendChild(sub);
     var lo = document.createElement("button");
     lo.type = "button";
     lo.textContent = "Odjava";
     lo.addEventListener("click", logout);
-    drop.appendChild(st);
+    drop.appendChild(sw);
     drop.appendChild(lo);
     wrap.appendChild(b);
     wrap.appendChild(drop);
