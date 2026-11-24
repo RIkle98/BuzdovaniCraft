@@ -31,36 +31,60 @@
   <a href="launcher.html" class="nav-launcher active">Buzz Launcher</a>
 </nav>
 
-<main class="vote-page">
+<main class="vote-page launcher-page">
+  <!-- dugme za skidanje je u koloni ispod -->
   <div class="vote-left">
+    <div class="dl-top"><a class="btn" href="launcher/BuzzLauncher.zip" download>Skini Buzz Launcher</a></div>
     <h2>Buzz Launcher</h2>
     <p class="lead">Minecraft Launcher kreiran od buzdovana za buzdovana. Jedan exe kojeg otvoriš, a on napravi folder sa klijentom na mjestu gdje je otvoren.</p>
-    <button type="button" class="gal-thumb" id="galThumb" aria-label="Pogledaj slike launchera"></button>
-    <p class="lead"><a class="btn" href="launcher/BuzzLauncher.zip" download>Skini Buzz Launcher</a></p>
-    <p class="lead">Skineš zip, raspakuješ i pokreneš BuzzLauncher.exe. Chrome ili Windows mogu javiti sumnjivo skidanje jer launcher nije potpisan: klikni "Zadrži" (Keep), a u Windowsu "Više informacija", pa "Pokreni svejedno".</p>
-    <p class="lead">VirusTotal: 0/63. <a class="url" href="https://www.virustotal.com/gui/file/01d49c877553c6cc0587e1f008cf7c157f66eb77365c15070f5bed95a4531e84" target="_blank" rel="noopener noreferrer">https://www.virustotal.com/gui/file/01d49c877553c6cc0587e1f008cf7c157f66eb77365c15070f5bed95a4531e84</a></p>
-    <p class="lead note">SHA-256 fajla BuzzLauncher.exe unutar zip-a: 01d49c877553c6cc0587e1f008cf7c157f66eb77365c15070f5bed95a4531e84</p>
+    <div class="gal-row" id="galRow"></div>
+    <p class="lead">Skineš zip, raspakuješ i pokreneš BuzzLauncher.exe. Chrome ili Windows mogu javiti sumnjivo skidanje jer launcher nije potpisan: klikni "Zadrži" (Keep).</p>
+    <p class="lead note">SHA-256 fajla BuzzLauncher.exe unutar zip-a: <span class="sha-line"><span id="shaTxt">01d49c877553c6cc0587e1f008cf7c157f66eb77365c15070f5bed95a4531e84</span> <button type="button" id="shaCopy" class="copy-ico" aria-label="Kopiraj SHA-256" title="Kopiraj"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span></p>
   </div>
 </main>
 
 <script src="script.js"></script>
 <script>
 (function () {
+  var b = document.getElementById("shaCopy");
+  var t = document.getElementById("shaTxt");
+  if (!b || !t) return;
+  b.addEventListener("click", function () {
+    var h = t.textContent.trim();
+    var orig = b.dataset.o || (b.dataset.o = b.innerHTML);
+    function ok() { b.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'; setTimeout(function () { b.innerHTML = orig; }, 2000); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(h).then(ok, function () {});
+    } else {
+      var r = document.createRange(); r.selectNodeContents(t);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      try { document.execCommand("copy"); ok(); } catch (e) {}
+    }
+  });
+})();
+</script>
+<script>
+(function () {
   // Ovdje se dodaju slike: [putanja, opis]. Prva je mala slika na stranici.
   var IMGS = [
     ["image/launcher/launcher-main.png", "Buzz Launcher: glavni prozor"],
-    ["image/launcher/launcher-settings.png", "Buzz Launcher: podešavanja"]
+    ["image/launcher/launcher-settings.png", "Buzz Launcher: podešavanja"],
+    ["image/launcher/launcher-vt.jpeg", "VirusTotal: 0/63"]
   ];
-  var thumb = document.getElementById("galThumb");
-  if (!thumb || !IMGS.length) return;
-  var ti = document.createElement("img");
-  ti.src = IMGS[0][0];
-  ti.alt = IMGS[0][1];
-  var cap = document.createElement("span");
-  cap.className = "gal-count";
-  cap.textContent = "Pogledaj slike (" + IMGS.length + ")";
-  thumb.appendChild(ti);
-  thumb.appendChild(cap);
+  var row = document.getElementById("galRow");
+  if (!row || !IMGS.length) return;
+  IMGS.forEach(function (it, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "gal-thumb";
+    b.setAttribute("aria-label", it[1]);
+    var ti = document.createElement("img");
+    ti.src = it[0];
+    ti.alt = it[1];
+    b.appendChild(ti);
+    b.addEventListener("click", function () { open(i); });
+    row.appendChild(b);
+  });
 
   var lb = document.createElement("div");
   lb.className = "lb";
@@ -90,7 +114,7 @@
   }
   function close() { lb.classList.remove("show"); }
 
-  thumb.addEventListener("click", function () { open(0); });
+  // klik na sličicu je vezan gore, u petlji
   prev.addEventListener("click", function (e) { e.stopPropagation(); show(cur - 1); });
   next.addEventListener("click", function (e) { e.stopPropagation(); show(cur + 1); });
   lb.querySelector(".lb-x").addEventListener("click", close);

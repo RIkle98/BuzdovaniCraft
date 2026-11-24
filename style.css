@@ -35,10 +35,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ember); outline
 .nav > a { position: relative; }
 .vote-left, .vote-left * { -webkit-user-select: text; user-select: text; }
 .vote-left .url { word-break: break-all; }
-.gal-thumb { position: relative; display: block; width: 260px; max-width: 100%; margin: 18px 0; padding: 0; overflow: hidden; background: none; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; transition: transform .3s ease, border-color .3s ease; }
+.gal-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0; }
+.gal-thumb { display: block; height: 120px; padding: 0; overflow: hidden; background: none; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; transition: transform .3s ease, border-color .3s ease; }
 .gal-thumb:hover { transform: translateY(-3px); border-color: var(--ember); }
-.gal-thumb img { display: block; width: 100%; height: auto; }
-.gal-count { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px; font: inherit; font-weight: 600; font-size: 14px; text-align: center; color: #f1ebe3; background: linear-gradient(0deg, rgba(20,17,15,.92), rgba(20,17,15,0)); }
+.gal-thumb img { display: block; height: 100%; width: auto; }
+.copy-ico { display: inline-flex; vertical-align: middle; margin-left: 6px; padding: 4px; background: none; border: 0; border-radius: 6px; color: inherit; opacity: .7; cursor: pointer; transition: color .3s ease, opacity .3s ease; }
+.copy-ico:hover { color: var(--ember); opacity: 1; }
+.sha-line { white-space: nowrap; font-size: .94em; }
+.sha-line .copy-ico { margin-left: 2px; padding: 2px; }
+.launcher-page .vote-left { position: relative; }
+.dl-top { position: absolute; bottom: 100%; left: 0; margin-bottom: 14px; }
 .lb { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; background: rgba(10,8,7,.92); opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease; }
 .lb.show { opacity: 1; visibility: visible; }
 .lb-img { max-width: min(86vw, 900px); max-height: 82vh; border-radius: 10px; box-shadow: 0 12px 40px rgba(0,0,0,.6); }
@@ -291,3 +297,4 @@ footer { text-align: center; padding: 40px 20px 50px; color: var(--muted); font-
 [data-theme="light"] .user-drop button { color: #2a2119; }
 [data-theme="light"] .dd-box a:hover,
 [data-theme="light"] .user-drop button:hover { background: #f6f1ea; color: #d97a1c; }
+.vote-left .sha-line, .vote-left .sha-line * { -webkit-user-select: none; user-select: none; }
